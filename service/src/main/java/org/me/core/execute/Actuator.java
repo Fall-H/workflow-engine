@@ -1,5 +1,6 @@
 package org.me.core.execute;
 
+import org.me.core.observer.EventListener;
 import org.me.model.PropertyValue;
 import org.me.model.PropertyValues;
 import org.me.service.WorkflowLoadService;
@@ -25,40 +26,62 @@ public class Actuator {
         propertyValues.createIndex();
         propertiesMap.put(name, propertyValues);
 
-        workflowRunable.put(name, new ExecuteRunnable(propertyValues));
+        workflowRunable.put(name, new ExecuteRunnable(name, propertyValues));
         workflowRunable.get(name).run();
     }
 
-    public class ExecuteRunnable extends ActuatorHandle implements Runnable {
+    public class ExecuteRunnable extends ActuatorHandle implements Runnable, EventListener {
         private PropertyValues propertyValues;
+        private String name;
 
-        public ExecuteRunnable(PropertyValues propertyValues) {
+        public ExecuteRunnable(String name, PropertyValues propertyValues) {
+            this.name = name;
             this.propertyValues = propertyValues;
         }
 
         @Override
         public void run() {
-
+            execute(name);
         }
 
         public void execute(String name) {
-            PropertyValue propertyValue = propertyValues.getPropertyValueIndex().get(propertyValues.getCurrentId());
+            long currentId = propertyValues.getCurrentId();
 
-            // 执行块
-            if (propertyValue == null) {
-                throw new RuntimeException("未查询到执行块");
-            }
+            while (true) {
+                PropertyValue propertyValue = propertyValues.getPropertyValueIndex().get(currentId);
 
-            switch (propertyValue.getPattern()) {
-                case 0:
+                if (propertyValue == null) {
+                    // 未查询到块
                     break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
+                }
+
+                propertyValue.setCurrentRunnable(this);
+
+                // 执行块
+                if (propertyValue == null) {
+                    throw new RuntimeException("未查询到执行块");
+                }
+
+                switch (propertyValue.getPattern()) {
+                    case 0:
+                        currentId = startHandle(name, propertyValue);
+                        break;
+                    case 1:
+                        currentId = executionProcessHandle(name, propertyValue);
+                        break;
+                    case 2:
+                        currentId = judgeHandle(name, propertyValue);
+                        break;
+                    case 3:
+                        currentId = endHandle(name, propertyValue);
+                        break;
+                }
             }
+        }
+
+        @Override
+        public void update() {
+            notify();
         }
     }
 

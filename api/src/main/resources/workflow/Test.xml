@@ -3,7 +3,7 @@
     <propertyValue>
         <pattern>0</pattern>
         <propertyId>1</propertyId>
-        <propertyIds>2</propertyIds>
+        <nextPropertyIds>2</nextPropertyIds>
         <executionLogic>0</executionLogic>
         <approverUsers>
             <approved>0</approved>
@@ -33,7 +33,7 @@
     <propertyValue>
         <pattern>3</pattern>
         <propertyId>2</propertyId>
-        <propertyIds></propertyIds>
+        <nextPropertyIds></nextPropertyIds>
         <executionLogic>0</executionLogic>
         <approverUsers>
             <approved>0</approved>

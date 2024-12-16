@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * 一个流程模块最小单元
@@ -26,31 +28,38 @@ public class PropertyValue {
     /**
      * 被链接的下一个模块
      */
-    private List<Long> propertyIds;
+    private List<Long> nextPropertyIds;
     /**
-     * 执行逻辑 0 当审批判断为真执行 第一个模块 否则 反之
+     * 执行逻辑
      */
-    private int executionLogic;
-
+    private String executionLogic;
     /**
-     * 审批人
+     * 参数表
      */
-    private List<ApproverUser> approverUsers;
-    /**
-     * 审批模式
-     */
-    private ApproverPattern approverPattern;
-    /**
-     * 抄送人
-     */
-    private CarbonCopyUser carbonCopyUser;
+    private Map<String, Object> params;
     /**
      * 本单元文本内容
      */
     private String msg;
-
     /**
      * 文件
      */
     private List<File> files;
+    /**
+     * 当前线程
+     */
+    private Runnable currentRunnable;
+
+//    /**
+//     * 审批人
+//     */
+//    private List<ApproverUser> approverUsers;
+//    /**
+//     * 审批模式
+//     */
+//    private ApproverPattern approverPattern;
+//    /**
+//     * 抄送人
+//     */
+//    private CarbonCopyUser carbonCopyUser;
 }
