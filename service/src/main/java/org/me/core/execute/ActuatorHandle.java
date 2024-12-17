@@ -32,17 +32,21 @@ public class ActuatorHandle {
      *
      * @param name
      * @param propertyValue
-     * @return
+     * @return -1 调用方法返回值错误 -2 当前节点需要等待输入
      */
     protected long executionProcessHandle(String name, PropertyValue propertyValue) {
         log.info("{} executionProcessHandle", name);
 
         try {
-            Object[] object = loadObject(propertyValue.getExecutionLogic());
-            Method handleMethod = (Method) object[0];
-            Object handleInstance = object[1];
-            // 调用方法
-            handleMethod.invoke(handleInstance, propertyValue.getParams(), propertyValue);
+            Integer result  = executeMethod(propertyValue);
+
+            if (result == null) {
+                return -1;
+            }
+
+            if (result == 2) {
+                return -2;
+            }
 
             return propertyValue.getNextPropertyIds().get(0);
         } catch (Exception e) {
@@ -54,33 +58,26 @@ public class ActuatorHandle {
 
     /**
      * 判断块 如果成功 执行列表中第一个块 否则执行列表中第二个块
+     *
      * @param name
      * @param propertyValue
-     * @return -1 调用方法返回值错误
+     * @return -1 调用方法返回值错误 -2 当前节点需要等待输入
      */
     protected long judgeHandle(String name, PropertyValue propertyValue) {
         log.info("{} judgeHandle", name);
 
         try {
-            Object[] object = loadObject(propertyValue.getExecutionLogic());
-            Method handleMethod = (Method) object[0];
-            Object handleInstance = object[1];
+            Integer result = executeMethod(propertyValue);
 
-            Class<?> returnType = handleMethod.getReturnType();
-
-            if (!(returnType == boolean.class || returnType == Boolean.class)) {
+            if (result == null) {
                 return -1;
             }
 
-            // 调用方法
-            Boolean result = (Boolean) handleMethod.invoke(handleInstance, propertyValue.getParams(), propertyValue);
-
-            if (result) {
-                return propertyValue.getNextPropertyIds().get(0);
-            } else {
-                return propertyValue.getNextPropertyIds().get(1);
+            if (result == 2) {
+                return -2;
             }
 
+            return propertyValue.getNextPropertyIds().get(result);
         } catch (Exception e) {
             // 更详细的异常处理
             log.error("Error executing method", e);
@@ -90,17 +87,19 @@ public class ActuatorHandle {
 
     /**
      * 结束块
+     *
      * @param name
      * @param propertyValue
      * @return 返回 0 正常退出
      */
     protected long endHandle(String name, PropertyValue propertyValue) {
-        log.info("{} startHandle", name);
+        log.info("{} endHandle", name);
 
         return 0;
     }
 
-    private Object[] loadObject(String methodSignature) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    private Integer executeMethod(PropertyValue propertyValue) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        String methodSignature = propertyValue.getExecutionLogic();
         int lastDotIndex = methodSignature.lastIndexOf(".");
         String className = methodSignature.substring(0, lastDotIndex);
         String methodName = methodSignature.substring(lastDotIndex + 1);
@@ -108,12 +107,18 @@ public class ActuatorHandle {
         // 加载类
         Class<?> handleClass = Class.forName(className);
         // 定义参数类型
-        Class<?>[] parameterTypes = new Class<?>[]{Map.class, PropertyValue.class};
+        Class<?>[] parameterTypes = new Class<?>[]{PropertyValue.class};
         // 获取方法对象
         Method handleMethod = handleClass.getMethod(methodName, parameterTypes);
         // 创建类的实例
         Object handleInstance = handleClass.getDeclaredConstructor().newInstance();
 
-        return new Object[]{handleMethod, handleInstance};
+        Class<?> returnType = handleMethod.getReturnType();
+
+        if (!(returnType == int.class || returnType == Integer.class)) {
+            return null;
+        }
+
+        return (int) handleMethod.invoke(handleInstance, propertyValue);
     }
 }

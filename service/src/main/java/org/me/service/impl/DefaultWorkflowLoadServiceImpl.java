@@ -18,6 +18,7 @@ public class DefaultWorkflowLoadServiceImpl implements WorkflowLoadService {
             FileInputStream fis = new FileInputStream(filePath);
             PropertyValues propertyValues = (PropertyValues) unmarshaller.unmarshal(fis);
             fis.close();
+            propertyValues.setCurrentId(propertyValues.getPropertyValue().get(0).getPropertyId());
             return propertyValues;
         } catch (Exception e) {
             e.printStackTrace();

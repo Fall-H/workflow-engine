@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -36,7 +37,7 @@ public class PropertyValue {
     /**
      * 参数表
      */
-    private Map<String, Object> params;
+    private Map<String, String> params;
     /**
      * 本单元文本内容
      */
@@ -45,10 +46,6 @@ public class PropertyValue {
      * 文件
      */
     private List<File> files;
-    /**
-     * 当前线程
-     */
-    private Runnable currentRunnable;
 
 //    /**
 //     * 审批人

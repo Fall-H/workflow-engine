@@ -1,63 +1,33 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <propertyValues>
     <propertyValue>
         <pattern>0</pattern>
         <propertyId>1</propertyId>
         <nextPropertyIds>2</nextPropertyIds>
-        <executionLogic>0</executionLogic>
-        <approverUsers>
-            <approved>0</approved>
-            <user>
-                <userId>0</userId>
-                <userName></userName>
-                <password></password>
-            </user>
-        </approverUsers>
-        <approverPattern>
-            <pattern>1</pattern>
-        </approverPattern>
-        <carbonCopyUser>
-            <carbonCopyPattern>0</carbonCopyPattern>
-            <user>
-                <userId>0</userId>
-                <userName></userName>
-                <password></password>
-            </user>
-        </carbonCopyUser>
         <msg>adf</msg>
-        <files>
-            <filePath></filePath>
-            <fileName></fileName>
-        </files>
+    </propertyValue>
+    <propertyValue>
+        <pattern>2</pattern>
+        <propertyId>2</propertyId>
+        <nextPropertyIds>3</nextPropertyIds>
+        <nextPropertyIds>4</nextPropertyIds>
+        <executionLogic>org.me.core.logic.UserLogic.verify</executionLogic>
+        <params>
+            <entry>
+                <key>approverUser_0</key>
+                <value>{"approved":2}</value>
+            </entry>
+        </params>
+        <msg>adf</msg>
     </propertyValue>
     <propertyValue>
         <pattern>3</pattern>
-        <propertyId>2</propertyId>
-        <nextPropertyIds></nextPropertyIds>
-        <executionLogic>0</executionLogic>
-        <approverUsers>
-            <approved>0</approved>
-            <user>
-                <userId>0</userId>
-                <userName></userName>
-                <password></password>
-            </user>
-        </approverUsers>
-        <approverPattern>
-            <pattern>1</pattern>
-        </approverPattern>
-        <carbonCopyUser>
-            <carbonCopyPattern>0</carbonCopyPattern>
-            <user>
-                <userId>0</userId>
-                <userName></userName>
-                <password></password>
-            </user>
-        </carbonCopyUser>
+        <propertyId>3</propertyId>
         <msg>adf</msg>
-        <files>
-            <filePath></filePath>
-            <fileName></fileName>
-        </files>
+    </propertyValue>
+    <propertyValue>
+        <pattern>3</pattern>
+        <propertyId>4</propertyId>
+        <msg>asdfsdafdf</msg>
     </propertyValue>
 </propertyValues>

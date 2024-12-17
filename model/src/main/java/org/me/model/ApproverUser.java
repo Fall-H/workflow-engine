@@ -13,7 +13,7 @@ public class ApproverUser {
     private User user;
     /**
      * 是否通过审批
-     * 0 未审批 1 不通过 2 通过
+     * 0 通过 1 不通过 2 未审批
      */
     private int approved;
 }
