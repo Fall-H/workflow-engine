@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://org.me/model" elementFormDefault="qualified">
+
+    <!-- 定义根元素propertyValues -->
+    <xs:element name="propertyValues" type="PropertyValuesType"/>
+
+    <!-- 定义PropertyValues复杂类型 -->
+    <xs:complexType name="PropertyValuesType">
+        <xs:sequence>
+            <xs:element name="currentId" type="xs:long"/>
+            <xs:element name="propertyValue" type="PropertyValueType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- 定义PropertyValue复杂类型 -->
+    <xs:complexType name="PropertyValueType">
+        <xs:sequence>
+            <xs:element name="propertyId" type="xs:long"/>
+            <xs:element name="pattern" type="xs:int"/>
+            <xs:element name="nextPropertyIds" type="NextPropertyIdsType" minOccurs="0"/>
+            <xs:element name="executionLogic" type="xs:string" minOccurs="0"/>
+            <xs:element name="params" type="ParamsType" minOccurs="0"/>
+            <xs:element name="msg" type="xs:string" minOccurs="0"/>
+            <xs:element name="files" type="FilesType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- 定义nextPropertyIds列表复杂类型 -->
+    <xs:complexType name="NextPropertyIdsType">
+        <xs:sequence>
+            <xs:element name="nextPropertyId" type="xs:long" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- 定义params映射复杂类型 -->
+    <xs:complexType name="ParamsType">
+        <xs:sequence>
+            <xs:element name="param" type="ParamType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- 定义单个参数复杂类型 -->
+    <xs:complexType name="ParamType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="key" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- 定义files列表复杂类型 -->
+    <xs:complexType name="FilesType">
+        <xs:sequence>
+            <xs:element name="filePath" type="xs:string" maxOccurs="unbounded"/>
+            <xs:element name="fileName" type="xs:string" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
