@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<propertyValues>
+    <propertyValue>
+        <pattern>0</pattern>
+        <propertyId>1</propertyId>
+        <nextPropertyIds>2</nextPropertyIds>
+        <msg>开始</msg>
+        <executionLogic></executionLogic>
+        <params></params>
+    </propertyValue>
+    <propertyValue>
+        <pattern>1</pattern>
+        <propertyId>2</propertyId>
+        <nextPropertyIds>3</nextPropertyIds>
+        <msg>处理</msg>
+        <executionLogic>org.me.core.logic.StringLogic.print</executionLogic>
+        <params></params>
+    </propertyValue>
+    <propertyValue>
+        <pattern>3</pattern>
+        <propertyId>3</propertyId>
+        <msg>结束</msg>
+        <executionLogic></executionLogic>
+        <params></params>
+    </propertyValue>
+</propertyValues>

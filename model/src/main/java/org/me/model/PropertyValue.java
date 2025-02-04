@@ -47,16 +47,8 @@ public class PropertyValue {
      */
     private List<File> files;
 
-//    /**
-//     * 审批人
-//     */
-//    private List<ApproverUser> approverUsers;
-//    /**
-//     * 审批模式
-//     */
-//    private ApproverPattern approverPattern;
-//    /**
-//     * 抄送人
-//     */
-//    private CarbonCopyUser carbonCopyUser;
+    private double x;
+    private double y;
+    private double width;
+    private double height;
 }

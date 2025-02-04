@@ -38,7 +38,7 @@ public class ActuatorHandle {
         log.info("{} executionProcessHandle", name);
 
         try {
-            Integer result  = executeMethod(propertyValue);
+            Integer result = executeMethod(propertyValue);
 
             if (result == null) {
                 return -1;
@@ -100,6 +100,11 @@ public class ActuatorHandle {
 
     private Integer executeMethod(PropertyValue propertyValue) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         String methodSignature = propertyValue.getExecutionLogic();
+
+        if (methodSignature == null || "".equals(methodSignature)) {
+            throw new RuntimeException("No executable method is given to the execution block");
+        }
+
         int lastDotIndex = methodSignature.lastIndexOf(".");
         String className = methodSignature.substring(0, lastDotIndex);
         String methodName = methodSignature.substring(lastDotIndex + 1);

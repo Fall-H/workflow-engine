@@ -47,4 +47,13 @@ public class ApiTest {
         return;
     }
 
+    @Test
+    public void testGenerate() {
+        testGenerateXml("test");
+    }
+
+    public void testGenerateXml(String name) {
+        actuator.createFlow(name, "classpath:workflow/filex.xml");
+    }
+
 }
